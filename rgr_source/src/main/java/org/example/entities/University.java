@@ -21,7 +21,12 @@ public class University {
     }
 
     public void study(Student student) {
-        course.check(student);
+        for (int i = 1; i <= 4; i++) {
+            if (!course.check(student, i)) {
+                System.out.println("Student " + student.getName() + " expelled on " + i + " course!");
+                return;
+            }
+        }
         System.out.println(student.getName() + " end university");
     }
 }

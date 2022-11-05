@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.List;
+import java.util.Map;
 
 public class AppTest {
     private final PrintStream standardOut = System.out;
@@ -40,7 +42,7 @@ public class AppTest {
                 student.getName() +" end university", outputStreamCaptor.toString().trim());
     }*/
 
-    @Test
+    /*@Test
     public void testChain() {
         Student student = new Student("Jack");
         University university = new University();
@@ -64,6 +66,19 @@ public class AppTest {
                 student1.getName() + " passed laboratory works\r\n" +
                 student1.getName() + " passed session\r\n" +
                 student1.getName() + " end university", outputStreamCaptor.toString().trim());
+    }*/
+
+    @Test
+    public void testChainWithScores() {
+        Student student = new Student("Jack");
+        University university = new University();
+        university.study(student);
+        Map<Integer, List<String>> scoresByCourse = student.getProgress();
+        List<String> allScores = scoresByCourse.values().stream().flatMap(List::stream).toList();
+        if (!allScores.contains("F"))
+            Assert.assertEquals(4, scoresByCourse.keySet().size());
+        else
+            Assert.assertTrue(outputStreamCaptor.toString().trim().endsWith("Student " + student.getName() + " expelled on " + scoresByCourse.keySet().size() + " course!"));
     }
 
 

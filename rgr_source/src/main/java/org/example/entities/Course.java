@@ -12,13 +12,13 @@ public abstract class Course {
         return first;
     }
 
-    public abstract boolean check(Student student);
+    public abstract boolean check(Student student, int numOfCourse);
 
-    protected boolean checkNext(Student student) {
+    protected boolean checkNext(Student student, int numOfCourse) {
         if (next == null) {
             return true;
         }
-        return next.check(student);
+        return next.check(student, numOfCourse);
     }
 
     protected String scoreInString(int score) {
