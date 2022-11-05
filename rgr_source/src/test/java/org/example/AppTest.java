@@ -1,9 +1,7 @@
 package org.example;
 
 
-import org.example.entities.Course;
-import org.example.entities.Student;
-import org.example.entities.University;
+import org.example.entities.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +28,7 @@ public class AppTest {
         Assert.assertEquals(student.getName() + " end university", outputStreamCaptor.toString().trim());
     }*/
 
-    @Test
+    /*@Test
     public void testCourses() {
         Student student = new Student("Jack");
         Course course = new Course();
@@ -40,6 +38,32 @@ public class AppTest {
                 student.getName() +" passed laboratory works\r\n" +
                 student.getName() +" passed session\r\n" +
                 student.getName() +" end university", outputStreamCaptor.toString().trim());
+    }*/
+
+    @Test
+    public void testChain() {
+        Student student = new Student("Jack");
+        University university = new University();
+        university.study(student);
+        Assert.assertEquals(student.getName() + " listened lectures.\r\n" +
+                student.getName() + " passed laboratory works\r\n" +
+                student.getName() + " passed course work\r\n" +
+                student.getName() + " passed session\r\n" +
+                student.getName() + " end university", outputStreamCaptor.toString().trim());
+
+        outputStreamCaptor.reset();
+
+        Student student1 = new Student("John");
+        university.setCourse(Course.link(
+                new Lectures(),
+                new LaboratoryWorks(),
+                new Session()
+        ));
+        university.study(student1);
+        Assert.assertEquals(student1.getName() + " listened lectures.\r\n" +
+                student1.getName() + " passed laboratory works\r\n" +
+                student1.getName() + " passed session\r\n" +
+                student1.getName() + " end university", outputStreamCaptor.toString().trim());
     }
 
 

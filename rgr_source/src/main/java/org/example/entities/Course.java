@@ -1,21 +1,34 @@
 package org.example.entities;
 
-public class Course {
-    public void studyCourse(Student student) {
-        lectures(student);
-        laboratoryWorks(student);
-        session(student);
+public abstract class Course {
+    private Course next;
+
+    public static Course link(Course first, Course ... chain) {
+        Course head = first;
+        for (Course nextInChain : chain) {
+            head.next = nextInChain;
+            head = nextInChain;
+        }
+        return first;
     }
 
-    private void lectures(Student student) {
-        System.out.println(student.getName() + " listened lectures.");
+    public abstract boolean check(Student student);
+
+    protected boolean checkNext(Student student) {
+        if (next == null) {
+            return true;
+        }
+        return next.check(student);
     }
 
-    private void laboratoryWorks(Student student) {
-        System.out.println(student.getName() + " passed laboratory works");
-    }
-
-    private void session(Student student) {
-        System.out.println(student.getName() + " passed session");
+    protected String scoreInString(int score) {
+        if (score >= 90)
+            return "A";
+        else if (score >= 75)
+            return "B";
+        else if (score >= 60)
+            return "C";
+        else
+            return "F";
     }
 }
