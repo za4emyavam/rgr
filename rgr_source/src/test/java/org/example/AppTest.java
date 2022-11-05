@@ -68,7 +68,7 @@ public class AppTest {
                 student1.getName() + " end university", outputStreamCaptor.toString().trim());
     }*/
 
-    @Test
+    /*@Test
     public void testChainWithScores() {
         Student student = new Student("Jack");
         University university = new University();
@@ -79,8 +79,20 @@ public class AppTest {
             Assert.assertEquals(4, scoresByCourse.keySet().size());
         else
             Assert.assertTrue(outputStreamCaptor.toString().trim().endsWith("Student " + student.getName() + " expelled on " + scoresByCourse.keySet().size() + " course!"));
-    }
+    }*/
 
+    @Test
+    public void testState() {
+        Student student;
+        University university = new University();
+        for (int i = 0; i < 100; i++) {
+            student = new Student("John" + i, new DiligentStudent());
+            String hashBefore = String.valueOf(student.hashCode());
+            university.study(student);
+            String hashAfter = String.valueOf(student.hashCode());
+            Assert.assertEquals(hashBefore, hashAfter);
+        }
+    }
 
     @After
     public void tearDown() {
