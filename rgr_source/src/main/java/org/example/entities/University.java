@@ -1,8 +1,18 @@
 package org.example.entities;
 
 public class University {
-    public void study(Student student) {
-        System.out.println(student.getName() + " end university");
+    Course course;
+
+    public University(Course course) {
+        this.course = course;
     }
 
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public void study(Student student) {
+        course.studyCourse(student);
+        System.out.println(student.getName() + " end university");
+    }
 }
